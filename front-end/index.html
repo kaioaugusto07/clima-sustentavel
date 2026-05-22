@@ -1,16 +1,103 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Clima Sustentável Inteligente</title>
-    <link rel="stylesheet" href="index.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clima Inteligente</title>
+  <link rel="stylesheet" href="index.css" />
 </head>
-
 <body>
-    <div id="app"></div>
-    <script type="module" src="app.js"></script>
-</body>
 
-</html> 
+  <!-- ANIMATED BACKGROUND -->
+  <div class="sky-bg">
+    <div class="sky-layer night"></div>
+    <div class="stars"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="rain-container" id="rainContainer"></div>
+    <div id="cloudParticles"></div>
+  </div>
+
+  <div id="app"></div>
+
+  <script>
+    // ── RAIN EFFECT ──
+    function createRain() {
+      const container = document.getElementById('rainContainer');
+      if (!container) return;
+      container.style.display = 'block';
+      for (let i = 0; i < 60; i++) {
+        const drop = document.createElement('div');
+        drop.className = 'rain-drop';
+        drop.style.left = Math.random() * 100 + 'vw';
+        drop.style.height = (40 + Math.random() * 60) + 'px';
+        drop.style.animationDuration = (0.6 + Math.random() * 0.8) + 's';
+        drop.style.animationDelay = (Math.random() * 2) + 's';
+        container.appendChild(drop);
+      }
+    }
+
+    // ── CLOUD EFFECT ──
+    function createClouds() {
+      const container = document.getElementById('cloudParticles');
+      if (!container) return;
+      for (let i = 0; i < 5; i++) {
+        const c = document.createElement('div');
+        c.className = 'cloud-particle';
+        const size = 200 + Math.random() * 300;
+        c.style.width = size + 'px';
+        c.style.height = (size * 0.5) + 'px';
+        c.style.top = (10 + Math.random() * 50) + '%';
+        c.style.animationDuration = (30 + Math.random() * 30) + 's';
+        c.style.animationDelay = (Math.random() * 20) + 's';
+        container.appendChild(c);
+      }
+    }
+
+    // ── UPDATE SKY ──
+    window.updateSkyCondition = function(condition, temp) {
+      const night = document.querySelector('.sky-layer.night');
+      const orbs  = document.querySelectorAll('.orb');
+      const cond  = (condition || '').toLowerCase();
+
+      // Remove rain drops
+      const rc = document.getElementById('rainContainer');
+      if (rc) { rc.innerHTML = ''; rc.style.display = 'none'; }
+
+      if (cond.includes('rain') || cond.includes('chuva') || cond.includes('garoa')) {
+        // Stormy blue-grey
+        if (night) night.style.background =
+          'linear-gradient(180deg,#0d1b2a 0%,#1a2535 50%,#111c28 100%)';
+        orbs.forEach(o => { o.style.opacity = '0.08'; });
+        createRain();
+      } else if (cond.includes('storm') || cond.includes('thunder') || cond.includes('trovoa')) {
+        if (night) night.style.background =
+          'linear-gradient(180deg,#0a0d1a 0%,#131625 50%,#0a0c18 100%)';
+        orbs.forEach(o => { o.style.background = 'radial-gradient(circle,#1a1a4a,transparent 70%)'; o.style.opacity='0.12'; });
+        createRain();
+      } else if (cond.includes('cloud') || cond.includes('nublado') || cond.includes('nuvem')) {
+        if (night) night.style.background =
+          'linear-gradient(180deg,#0e1c2e 0%,#1b2c3e 50%,#0d1a26 100%)';
+        orbs.forEach(o => { o.style.opacity = '0.1'; });
+        createClouds();
+      } else if (cond.includes('clear') || cond.includes('limpo') || cond.includes('sol')) {
+        if (temp > 28) {
+          // Warm clear day
+          if (night) night.style.background =
+            'radial-gradient(ellipse 80% 60% at 50% 0%,#0a2540 0%,#081a2f 60%,#051016 100%)';
+          orbs.forEach((o,i) => {
+            if (i===0) o.style.background = 'radial-gradient(circle,#2a6b3a,transparent 70%)';
+            if (i===1) o.style.background = 'radial-gradient(circle,#0d5a7a,transparent 70%)';
+            o.style.opacity = '0.22';
+          });
+        }
+      }
+    };
+
+    createClouds(); // default subtle clouds
+  </script>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
