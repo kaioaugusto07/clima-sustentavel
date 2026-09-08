@@ -1,24 +1,24 @@
 # Projetinho da facul
 
-Um aplicativo web que fornece dados climáticos da sua localização em tempo real, com recomendações ambientais personalizadas baseadas em temperatura, clima, umidade, vento e qualidade do ar.
+A web application that provides real-time weather data for your location, along with personalized environmental recommendations based on temperature, weather conditions, humidity, wind, and air quality.
 
-## Funcionalidades
-- Obtenção automática da localização do usuário
-- Dados climáticos via API OpenWeather
-- Recomendações sustentáveis baseadas nas condições atuais
-- Interface responsiva e moderna
+## Features
+- Automatic user location detection
+- Weather data via the OpenWeather API
+- Sustainable recommendations based on current conditions
+- Modern, responsive interface
 
-## Tecnologias
+## Technologies
 - **Front-end**: HTML, CSS, JavaScript (Vanilla)
 - **Back-end**: Node.js, Express
 - **APIs**: OpenWeatherMap
 
-## Como rodar localmente
-1. Clone o repositório
-2. Instale as dependências: `npm install`
-3. Crie um arquivo `.env` na raiz com sua chave da API OpenWeather: `OPENWEATHER_KEY=sua_chave_aqui`
-4. Execute: `npm run dev`
-5. Abra `http://localhost:3000` no navegador
+## How to run locally
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Create a `.env` file in the root directory with your OpenWeather API key: `OPENWEATHER_KEY=your_key_here`
+4. Run: `npm run dev`
+5. Open `http://localhost:3000` in your browser
 
-## Licença
+## License
 ISC
